@@ -7,18 +7,31 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CalendarView: View {
+    @State private var selectedDate = Date()
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            DatePicker("Datum auswählen", selection: $selectedDate, displayedComponents: .date)
+                .datePickerStyle(GraphicalDatePickerStyle())
+                .padding()
+
+            Text("Ausgewähltes Datum: \(selectedDate, formatter: dateFormatter)")
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+extension CalendarView {
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }
 }
+
+struct CalendarView_Previews: PreviewProvider {
+    static var previews: some View {
+        CalendarView()
+    }
+}
+
